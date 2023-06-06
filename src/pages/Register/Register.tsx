@@ -1,3 +1,4 @@
+import Index from '@/components/Register/Register'
 export default function Register() {
-  return <div>Register</div>
+  return <Index />
 }

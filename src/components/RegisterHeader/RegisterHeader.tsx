@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 export default function RegisterHeader() {
+  const { pathname } = useLocation()
+
   return (
     <header className='py-5'>
       <div className='max-w-[1200px] mx-auto'>
@@ -12,10 +14,12 @@ export default function RegisterHeader() {
                 </g>
               </svg>
             </Link>
-            <span className='lg:text-2xl font-normal text-xl ml-4 lg:h-[36px]'>Đăng ký</span>
+            <span className='lg:text-2xl font-normal text-xl ml-4 lg:h-[36px]'>
+              {pathname === '/register' ? 'Đăng ký' : 'Đăng nhập'}
+            </span>
           </nav>
 
-          <span className='text-sm font-medium text-primary'>
+          <span className='text-sm font-normal text-primary'>
             <Link to='https://help.shopee.vn/portal'>Bạn cần giúp đỡ?</Link>
           </span>
         </div>
