@@ -4,7 +4,7 @@ export default function RegisterHeader() {
 
   return (
     <header className='py-5'>
-      <div className='max-w-[1200px] mx-auto'>
+      <div className='container-1200'>
         <div className='flex justify-between items-center'>
           <nav className='flex items-end'>
             <Link to='/'>

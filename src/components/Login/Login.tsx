@@ -26,14 +26,14 @@ export default function Login() {
   }
   return (
     <div className='bg-primary'>
-      <div className='max-w-[1040px] mx-auto'>
+      <div className='container-1040'>
         <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-14 '>
           <div className='lg:col-span-2 lg:col-start-4 lg:px-5'>
             <div className='py-[40px] px-[30px] bg-white rounded-md'>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <span className='text-[20px] font-normal text-gray block '>Đăng nhập</span>
                 <div className='mt-8'>
-                  <Input type='text' name='email' control={control} placeholder='Email/Tên đăng nhập' />
+                  <Input type='email' name='email' control={control} placeholder='Email/Tên đăng nhập' />
                   <Error message={errors.email?.message} />
                 </div>
                 <div className='my-4'>
