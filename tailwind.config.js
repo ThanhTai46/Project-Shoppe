@@ -8,7 +8,8 @@ const plugin = require('tailwindcss/plugin')
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   corePlugins: {
-    container: true
+    container: true,
+    "colors.black": true
   },
   theme: {
     extend: {},
@@ -20,6 +21,7 @@ export default {
     },
     colors: {
       primary: '#ee4d2d',
+      black: "#000000de",
       'green-custom': '#30b566',
       transparent: 'transparent',
       current: 'currentColor',
@@ -53,5 +55,13 @@ export default {
         }
       })
     })
-  ]
+  ],
+  variants: {
+    extend: {
+        fontSize: ["hover", "focus"],
+        backgroundOpacity: ["active"],
+        borderWidth: ["hover", "focus"],
+        colors:["hover", "focus"],
+    },
+},
 }
