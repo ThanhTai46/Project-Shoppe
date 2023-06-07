@@ -16,10 +16,11 @@ export default {
       sm: '640px',
       md: '768px',
       lg: '1024px',
-      xl: '1280px',
+      xl: '1280px'
     },
     colors: {
       primary: '#ee4d2d',
+      'green-custom': '#30b566',
       transparent: 'transparent',
       current: 'currentColor',
       white: '#ffffff',
@@ -44,8 +45,13 @@ export default {
           marginRight: 'auto',
           paddingLeft: theme('spacing.4'),
           paddingRight: theme('spacing.4')
+        },
+        '.text-basic': {
+          fontSize: '13px',
+          fontWeight: '300',
+          color: '#ffffff'
         }
       })
     })
-  ],
+  ]
 }

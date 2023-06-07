@@ -1,11 +1,14 @@
+import { loginAccount } from '@/api/auth'
 import Error from '@/components/common/ErrorMessage/Error'
 import Button from '@/components/common/button/Button'
 import Input from '@/components/common/input/Input'
 import ToggleSignIn from '@/components/common/toggleSignin/ToggleSignIn'
 import { signInSchema } from '@/libs/validations/signIn.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 type FormData = {
   email: string
@@ -21,9 +24,17 @@ export default function Login() {
     resolver: yupResolver(signInSchema)
   })
 
+  const handleLoginMutation = useMutation({
+    mutationFn: (data: FormData) => loginAccount(data)
+  })
+
   const onSubmit = (data: FormData) => {
-    console.log(data)
+    handleLoginMutation.mutate(data, {
+      onSuccess: (data) => toast.success(data.data.message),
+      onError: (error: any) => toast.error(error?.message)
+    })
   }
+
   return (
     <div className='bg-primary'>
       <div className='container-1040'>

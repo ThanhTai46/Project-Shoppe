@@ -8,7 +8,10 @@ import * as yup from 'yup'
 import { registerSchema } from '@/libs/validations/register.schema'
 import { useMutation } from '@tanstack/react-query'
 import { registerAccount } from '@/api/auth'
-import { omit } from 'lodash'
+import { Omit, omit } from 'lodash'
+import { isErrorUnprocessableEntity } from '@/utils/utils'
+import { ResponseApi } from '@/types/utils'
+import { toast } from 'react-toastify'
 
 type FormData = yup.InferType<typeof registerSchema>
 
@@ -16,6 +19,7 @@ export default function Register() {
   const {
     handleSubmit,
     control,
+    setError,
     formState: { errors }
   } = useForm<FormData>({
     resolver: yupResolver(registerSchema)
@@ -24,10 +28,24 @@ export default function Register() {
   const handleRegisterFunction = useMutation({
     mutationFn: (body: Omit<FormData, 'passwordConfirmation'>) => registerAccount(body)
   })
+
   const onSubmit = (data: FormData) => {
     const result = omit(data, ['passwordConfirmation'])
     handleRegisterFunction.mutate(result, {
-      onSuccess: (data) => console.log(data)
+      onSuccess: (data) => toast.success(data.data.message),
+      onError: (error) => {
+        if (isErrorUnprocessableEntity<ResponseApi<Omit<FormData, 'passwordConfirmation'>>>(error)) {
+          const formError = error.response?.data.data
+          if (formError) {
+            Object.keys(formError).forEach((key) => {
+              setError(key as keyof FormData, {
+                type: 'server',
+                message: formError[key as keyof Omit<FormData, 'passwordConfirmation'>]
+              })
+            })
+          }
+        }
+      }
     })
   }
 
