@@ -5,14 +5,13 @@ interface Props {
   className?: string
   control: Control<any>
   placeholder?: string
-  type?: string
+  type?: React.HTMLInputTypeAttribute
 }
 export default function Input({ control, className, name, type, placeholder, ...textFieldProps }: Props) {
-  console.log('control: ', control)
   return (
     <>
       <Controller
-        name={name as string}
+        name={name}
         control={control}
         render={({ field, fieldState: { error } }) => {
           return (

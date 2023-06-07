@@ -6,6 +6,9 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { registerSchema } from '@/libs/validations/register.schema'
+import { useMutation } from '@tanstack/react-query'
+import { registerAccount } from '@/api/auth'
+import { omit } from 'lodash'
 
 type FormData = yup.InferType<typeof registerSchema>
 
@@ -18,13 +21,19 @@ export default function Register() {
     resolver: yupResolver(registerSchema)
   })
 
-  const onSubmit = (data: any) => {
-    console.log(data)
+  const handleRegisterFunction = useMutation({
+    mutationFn: (body: Omit<FormData, 'passwordConfirmation'>) => registerAccount(body)
+  })
+  const onSubmit = (data: FormData) => {
+    const result = omit(data, ['passwordConfirmation'])
+    handleRegisterFunction.mutate(result, {
+      onSuccess: (data) => console.log(data)
+    })
   }
 
   return (
     <div className='bg-primary'>
-      <div className='max-w-[1040px] mx-auto'>
+      <div className='container-1040'>
         <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-14 '>
           <div className='lg:col-span-2 lg:col-start-4 lg:px-5'>
             <div className='py-[40px] px-[30px] bg-white rounded-md'>
