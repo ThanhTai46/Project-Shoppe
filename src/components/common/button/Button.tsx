@@ -6,7 +6,7 @@ interface Props {
 export default function Button({ className, children, type }: Props) {
   return (
     <>
-      <button type={type} className={`${className} rounded-sm bg-primary py-3 text-white w-full`}>
+      <button type={type} className={`${className} rounded-sm bg-primary  text-white`}>
         {children}
       </button>
     </>

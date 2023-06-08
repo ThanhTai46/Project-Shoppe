@@ -51,7 +51,7 @@ export default function Login() {
                   <Input type='password' name='password' control={control} placeholder='Mật khẩu' />
                   <Error message={errors.password?.message} />
                 </div>
-                <Button>Đăng nhập</Button>
+                <Button className='w-full py-3'>Đăng nhập</Button>
               </form>
               <div className='mt-[10px] flex justify-between items-center'>
                 <Link to='#' className='text-[#05a] text-[.75rem] '>

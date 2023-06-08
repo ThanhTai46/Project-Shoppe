@@ -9,7 +9,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   corePlugins: {
     container: true,
-    "colors.black": true
+    'colors.black': true
   },
   theme: {
     extend: {},
@@ -21,7 +21,7 @@ export default {
     },
     colors: {
       primary: '#ee4d2d',
-      black: "#000000de",
+      black: '#000000de',
       'green-custom': '#30b566',
       transparent: 'transparent',
       current: 'currentColor',
@@ -50,18 +50,17 @@ export default {
         },
         '.text-basic': {
           fontSize: '13px',
-          fontWeight: '300',
-          color: '#ffffff'
+          fontWeight: '300'
         }
       })
     })
   ],
   variants: {
     extend: {
-        fontSize: ["hover", "focus"],
-        backgroundOpacity: ["active"],
-        borderWidth: ["hover", "focus"],
-        colors:["hover", "focus"],
-    },
-},
+      fontSize: ['hover', 'focus'],
+      backgroundOpacity: ['active'],
+      borderWidth: ['hover', 'focus'],
+      colors: ['hover', 'focus']
+    }
+  }
 }

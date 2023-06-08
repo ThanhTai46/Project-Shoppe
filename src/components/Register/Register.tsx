@@ -74,7 +74,9 @@ export default function Register() {
                   />
                   <Error message={errors.passwordConfirmation?.message} />
                 </div>
-                <Button type='submit'>Đăng ký</Button>
+                <Button className='w-full py-3' type='submit'>
+                  Đăng ký
+                </Button>
               </form>
               <ToggleSignIn page='register' />
             </div>
