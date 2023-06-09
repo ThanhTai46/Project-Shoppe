@@ -1,15 +1,15 @@
 export default function Footer() {
   return (
-    <footer className='py-16 bg-[#f5f5f5]'>
+    <footer className='bg-[#f5f5f5] py-16'>
       <div className='container-1200 px-4 text-sm'>
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-1 gap-4 lg:grid-cols-3'>
           <div className='lg:col-span-1'>© 2023 Shopee. Tất cả các quyền được bảo lưu.</div>
           <div className='lg:col-span-2'>
             Quốc gia & Khu vực: Singapore Indonesia Đài Loan Thái Lan Malaysia Việt Nam Philippines Brazil México
             Colombia Chile
           </div>
         </div>
-        <div className='flex flex-col text-center text-sm mt-10'>
+        <div className='mt-10 flex flex-col text-center text-sm'>
           <span className=''>Công ty TNHH Shopee</span>
           <span className='mt-6 text-xs'>
             Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành
@@ -25,5 +25,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

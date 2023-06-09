@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
-import NavHeader from '../NavHeader'
-import Button from '../common/button/Button'
-import Popover from '../Popover'
+import { Link } from 'react-router-dom';
+import NavHeader from '../NavHeader';
+import Button from '../common/button/Button';
+import Popover from '../Popover';
 
 export default function MainHeader() {
   const cartHtml = (
-    <div className='relative max-w-[500px] mx-auto rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
+    <div className='relative mx-auto max-w-[500px] rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
       <div className='p-2'>
         <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
         <div className='mt-5'>
-          <div className='mt-2 flex justify-between items-center py-2 hover:bg-gray-100'>
+          <div className='mt-2 flex items-center justify-between py-2 hover:bg-gray-100'>
             <div className='flex-shrink-0'>
               <img
                 src={`https://down-vn.img.susercontent.com/file/sg-11134201-22110-p9lcfw5ngbkv57_tn`}
@@ -43,10 +43,10 @@ export default function MainHeader() {
         <div className='mt-3 capitalize'>Chưa có sản phẩm</div>
       </div> */}
     </div>
-  )
+  );
 
   return (
-    <header className='bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white pb-5 pt-2'>
+    <header className='bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white'>
       <div className='container-1200'>
         {/* Nav Header */}
         <NavHeader />
@@ -67,12 +67,12 @@ export default function MainHeader() {
               <input
                 type='text'
                 placeholder='Search...'
-                className='border-none bg-transparent flex-grow outline-none text-neutral-600
-                  px-3 py-1 text-base
+                className='flex-grow border-none bg-transparent px-3 py-1
+                  text-base text-neutral-600 outline-none
                 '
               />
               {/* Button Search */}
-              <Button className='flex-shrink-0 py-1 px-4 hover:opacity-90'>
+              <Button className='flex-shrink-0 px-4 py-1 hover:opacity-90'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -91,7 +91,7 @@ export default function MainHeader() {
             </div>
           </form>
           {/* Cart */}
-          <div className='col-span-1 justify-self-center h-[70%]'>
+          <div className='col-span-1 h-[70%] justify-self-center'>
             <Popover renderPopover={cartHtml}>
               <Link to='/' className='relative'>
                 <svg
@@ -109,7 +109,7 @@ export default function MainHeader() {
                   />
                 </svg>
                 {
-                  <span className='absolute top-[-5px] left-[17px] rounded-full bg-white px-[9px] py-[1px] text-xs text-primary '>
+                  <span className='absolute left-[17px] top-[-5px] rounded-full bg-white px-[9px] py-[1px] text-xs text-primary '>
                     2
                   </span>
                 }
@@ -119,5 +119,5 @@ export default function MainHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -1,19 +1,23 @@
-import { getAccessTokenFromLS } from '@/utils/auth'
-import React, { Dispatch, createContext, useState } from 'react'
+import { User } from '@/types/user'
+import { getAccessTokenFromLS, getProfile } from '@/utils/auth'
+import { Dispatch, SetStateAction, createContext, useState } from 'react'
 
 interface AppContextInterface {
-  isAuthenticated: Boolean
-  setAuthenticated: Dispatch<React.SetStateAction<Boolean>>
+  isAuthenticated: boolean
+  setIsAuthenticated: Dispatch<SetStateAction<boolean>>
+  profile: User | null
 }
 
 const initialAppContext: AppContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLS()),
-  setAuthenticated: () => null
+  setIsAuthenticated: () => null,
+  profile: getProfile()
 }
+
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setAuthenticated] = useState<Boolean>(initialAppContext.isAuthenticated)
-
-  return <AppContext.Provider value={{ isAuthenticated, setAuthenticated }}>{children}</AppContext.Provider>
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated)
+  const profile = initialAppContext.profile || null
+  return <AppContext.Provider value={{ isAuthenticated, setIsAuthenticated, profile }}>{children}</AppContext.Provider>
 }

@@ -1,4 +1,9 @@
-export type ResponseApi<Data> = {
+export type ErrorResponse<Data> = {
   message: string
-  data?: Data
+  data: Data
+}
+
+export type SuccessResponse<Data> = {
+  message: string
+  data: Data
 }

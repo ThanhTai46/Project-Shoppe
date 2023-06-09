@@ -3,11 +3,13 @@ import Error from '@/components/common/ErrorMessage/Error'
 import Button from '@/components/common/button/Button'
 import Input from '@/components/common/input/Input'
 import ToggleSignIn from '@/components/common/toggleSignin/ToggleSignIn'
+import { AppContext } from '@/contexts/app.context'
 import { signInSchema } from '@/libs/validations/signIn.schema'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 type FormData = {
@@ -16,6 +18,8 @@ type FormData = {
 }
 
 export default function Login() {
+  const navigate = useNavigate()
+  const { setIsAuthenticated } = useContext(AppContext)
   const {
     control,
     handleSubmit,
@@ -30,19 +34,24 @@ export default function Login() {
 
   const onSubmit = (data: FormData) => {
     handleLoginMutation.mutate(data, {
-      onSuccess: (data) => toast.success(data.data.message),
+      onSuccess: (data) => {
+        setIsAuthenticated(true)
+        navigate('/')
+        toast.success(data.data.message)
+      },
       onError: (error: any) => toast.error(error?.message)
     })
   }
+  const isLoading = handleLoginMutation.isLoading
 
   return (
     <div className='bg-primary'>
       <div className='container-1040'>
-        <div className='grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-14 '>
+        <div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-14 '>
           <div className='lg:col-span-2 lg:col-start-4 lg:px-5'>
-            <div className='py-[40px] px-[30px] bg-white rounded-md'>
+            <div className='rounded-md bg-white px-[30px] py-[40px]'>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <span className='text-[20px] font-normal text-gray block '>Đăng nhập</span>
+                <span className='text-gray block text-[20px] font-normal'>Đăng nhập</span>
                 <div className='mt-8'>
                   <Input type='email' name='email' control={control} placeholder='Email/Tên đăng nhập' />
                   <Error message={errors.email?.message} />
@@ -51,14 +60,16 @@ export default function Login() {
                   <Input type='password' name='password' control={control} placeholder='Mật khẩu' />
                   <Error message={errors.password?.message} />
                 </div>
-                <Button className='w-full py-3'>Đăng nhập</Button>
+                <Button isLoading={isLoading} className='w-full py-3'>
+                  Đăng nhập
+                </Button>
               </form>
-              <div className='mt-[10px] flex justify-between items-center'>
-                <Link to='#' className='text-[#05a] text-[.75rem] '>
+              <div className='mt-[10px] flex items-center justify-between'>
+                <Link to='#' className='text-[.75rem] text-[#05a] '>
                   Quên mật khẩu
                 </Link>
 
-                <Link to='#' className='text-[#05a] text-[.75rem] '>
+                <Link to='#' className='text-[.75rem] text-[#05a] '>
                   Đăng nhập với SMS
                 </Link>
               </div>

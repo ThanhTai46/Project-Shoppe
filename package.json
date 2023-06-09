@@ -46,6 +46,7 @@
     "path": "^0.12.7",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "react-hook-form": "^7.44.3",
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.11.2",
