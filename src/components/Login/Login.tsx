@@ -19,7 +19,8 @@ type FormData = {
 
 export default function Login() {
   const navigate = useNavigate()
-  const { setIsAuthenticated } = useContext(AppContext)
+
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const {
     control,
     handleSubmit,
@@ -36,6 +37,7 @@ export default function Login() {
     handleLoginMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true)
+        setProfile(data.data.data.user)
         navigate('/')
         toast.success(data.data.message)
       },

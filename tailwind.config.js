@@ -9,7 +9,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   corePlugins: {
     container: true,
-    'colors.black': true
+    'colors.black': true,
   },
   theme: {
     extend: {},
@@ -21,6 +21,7 @@ export default {
     },
     colors: {
       primary: '#ee4d2d',
+      secondary: '#F5F5F5',
       black: '#000000de',
       'green-custom': '#30b566',
       transparent: 'transparent',
@@ -32,6 +33,7 @@ export default {
     }
   },
   plugins: [
+    require('@tailwindcss/line-clamp'),
     plugin(function ({ addComponents, theme }) {
       addComponents({
         '.container-1040': {
@@ -51,6 +53,11 @@ export default {
         '.text-basic': {
           fontSize: '13px',
           fontWeight: '300'
+        },
+        ".text-gray-primary": {
+          fontSize: "14px",
+          fontWeight: "400",
+          color: '#555',
         }
       })
     })

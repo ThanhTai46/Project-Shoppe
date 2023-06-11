@@ -1,19 +1,16 @@
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
-import { clearLocalStorage, getAccessTokenFromLS, getProfile, setAccessTokenLocalStorage, setProfile } from './auth'
+import { clearLocalStorage, getAccessTokenFromLS, setAccessTokenLocalStorage, setProfile } from './auth'
 import { AuthResponse } from '@/types/auth'
 import path from '@/utils/path'
-import { User } from '@/types/user'
 
 const apiKey = import.meta.env.VITE_URL
 class Http {
   instance: AxiosInstance
   private accessToken: string
-  private profile: User
 
   constructor() {
     this.accessToken = getAccessTokenFromLS()
-    this.profile = getProfile()
     this.instance = axios.create({
       baseURL: apiKey,
       headers: {
@@ -41,7 +38,6 @@ class Http {
           setAccessTokenLocalStorage(this.accessToken)
           const profile = (response.data as AuthResponse).data.user
           setProfile(profile)
-          this.profile = (response.data as AuthResponse).data.user
         } else if (url === path.logout) {
           this.accessToken = ''
           clearLocalStorage()

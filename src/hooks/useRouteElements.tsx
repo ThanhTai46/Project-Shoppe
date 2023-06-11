@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout'
 import RegisterLayout from '@/layouts/RegisterLayout'
 import Home from '@/pages/Home'
 import Login from '@/pages/Login'
+import ProductList from '@/pages/ProductList'
 import Profile from '@/pages/Profile'
 import Register from '@/pages/Register'
 import path from '@/utils/path'
@@ -64,6 +65,14 @@ export default function useRouteElements() {
           )
         }
       ]
+    },
+    {
+      path: path.product,
+      element: (
+        <MainLayout>
+          <ProductList />
+        </MainLayout>
+      )
     }
   ])
   return routeElement

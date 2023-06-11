@@ -7,13 +7,14 @@ import { AppContext } from '@/contexts/app.context'
 import path from '@/utils/path'
 
 export default function NavHeader() {
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
+
   const classItem = 'flex cursor-pointer items-center py-1 hover:text-white/70'
-  const { isAuthenticated, profile } = useContext(AppContext)
   const handleLogoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setIsAuthenticated(false)
+      setProfile(null)
     }
   })
   const handleLogout = () => {
@@ -48,6 +49,7 @@ export default function NavHeader() {
       </button>
     </div>
   )
+  console.log('profile', profile)
 
   return (
     <div className='flex justify-end'>
