@@ -1,13 +1,21 @@
 import http from '@/utils/http'
-import path from '@/utils/path'
+import path from '@/constants/path'
 
 type RegisterBody = {
   email: string
   password: string
 }
 
-export const registerAccount = (body: RegisterBody) => http.post(path.register, body)
+const authAPI = {
+  registerAccount(body: RegisterBody) {
+    return http.post(path.register, body)
+  },
+  loginAccount(body: RegisterBody) {
+    return http.post(path.login, body)
+  },
+  logout() {
+    return http.post(path.logout)
+  }
+}
 
-export const loginAccount = (body: RegisterBody) => http.post(path.login, body)
-
-export const logout = () => http.post(path.logout)
+export default authAPI

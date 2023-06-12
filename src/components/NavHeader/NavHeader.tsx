@@ -1,17 +1,17 @@
+import authAPI from '@/api/auth'
+import { AppContext } from '@/contexts/app.context'
+import path from '@/constants/path'
 import { useMutation } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
-import { logout } from '@/api/auth'
-import { useContext } from 'react'
-import { AppContext } from '@/contexts/app.context'
-import path from '@/utils/path'
 
 export default function NavHeader() {
   const { setIsAuthenticated, setProfile, profile, isAuthenticated } = useContext(AppContext)
 
   const classItem = 'flex cursor-pointer items-center py-1 hover:text-white/70'
   const handleLogoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: authAPI.logout,
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)
@@ -49,7 +49,6 @@ export default function NavHeader() {
       </button>
     </div>
   )
-  console.log('profile', profile)
 
   return (
     <div className='flex justify-end'>

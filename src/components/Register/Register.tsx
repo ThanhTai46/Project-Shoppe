@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { registerSchema } from '@/libs/validations/register.schema'
 import { useMutation } from '@tanstack/react-query'
-import { registerAccount } from '@/api/auth'
 import { Omit, omit } from 'lodash'
 import { isErrorUnprocessableEntity } from '@/utils/utils'
 import { toast } from 'react-toastify'
@@ -15,6 +14,7 @@ import { ErrorResponse } from '@/types/utils'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AppContext } from '@/contexts/app.context'
+import authAPI from '@/api/auth'
 
 type FormData = yup.InferType<typeof registerSchema>
 
@@ -30,7 +30,7 @@ export default function Register() {
   const navigate = useNavigate()
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const handleRegisterFunction = useMutation({
-    mutationFn: (body: Omit<FormData, 'passwordConfirmation'>) => registerAccount(body)
+    mutationFn: (body: Omit<FormData, 'passwordConfirmation'>) => authAPI.registerAccount(body)
   })
 
   const onSubmit = (data: FormData) => {

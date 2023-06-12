@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import path from '@/utils/path'
+import path from '@/constants/path'
 
 export default function RegisterHeader() {
   const { pathname } = useLocation()

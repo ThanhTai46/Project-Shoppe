@@ -1,4 +1,4 @@
-import { loginAccount } from '@/api/auth'
+import authAPI from '@/api/auth'
 import Error from '@/components/common/ErrorMessage/Error'
 import Button from '@/components/common/button/Button'
 import Input from '@/components/common/input/Input'
@@ -30,7 +30,7 @@ export default function Login() {
   })
 
   const handleLoginMutation = useMutation({
-    mutationFn: (data: FormData) => loginAccount(data)
+    mutationFn: (data: FormData) => authAPI.loginAccount(data)
   })
 
   const onSubmit = (data: FormData) => {

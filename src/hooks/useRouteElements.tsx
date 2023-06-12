@@ -6,7 +6,7 @@ import Login from '@/pages/Login'
 import ProductList from '@/pages/ProductList'
 import Profile from '@/pages/Profile'
 import Register from '@/pages/Register'
-import path from '@/utils/path'
+import path from '@/constants/path'
 import { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 export default function useRouteElements() {

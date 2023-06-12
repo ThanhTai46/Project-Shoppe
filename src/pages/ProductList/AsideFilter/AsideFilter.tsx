@@ -1,6 +1,6 @@
 import Button from '@/components/common/button/Button'
 import Input from '@/components/common/input/Input'
-import path from '@/utils/path'
+import path from '@/constants/path'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -76,7 +76,7 @@ export default function AsideFilter() {
                   placeholder='₫ TỪ'
                   name='minPrice'
                   control={control}
-                  className='w-full rounded-sm border border-gray-300 !p-2 outline-none focus:border-gray-500 focus:shadow-sm'
+                  className='w-full rounded-sm border border-gray-300 !p-1 outline-none focus:border-gray-500 focus:shadow-sm'
                 />
                 <div className='mx-3 h-[1px] flex-1 bg-[#bdbdbd]'>
                   <span className='invisible'>-</span>
@@ -85,7 +85,7 @@ export default function AsideFilter() {
                   placeholder='₫ ĐẾN'
                   name='maxPrice'
                   control={control}
-                  className='w-full rounded-sm border border-gray-300 !p-2 outline-none focus:border-gray-500 focus:shadow-sm'
+                  className='w-full rounded-sm border border-gray-300 !p-1 outline-none focus:border-gray-500 focus:shadow-sm'
                 />
               </div>
               <Button className='py-2 text-sm'>ÁP DỤNG</Button>

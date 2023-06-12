@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
-import path from '@/utils/path'
+import path from '@/constants/path'
 interface Props {
   page: string
 }

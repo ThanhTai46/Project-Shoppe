@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
 import { clearLocalStorage, getAccessTokenFromLS, setAccessTokenLocalStorage, setProfile } from './auth'
 import { AuthResponse } from '@/types/auth'
-import path from '@/utils/path'
+import path from '@/constants/path'
 
 const apiKey = import.meta.env.VITE_URL
 class Http {
