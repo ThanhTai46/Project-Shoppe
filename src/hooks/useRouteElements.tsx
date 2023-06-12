@@ -48,7 +48,7 @@ export default function useRouteElements() {
       index: true,
       element: (
         <MainLayout>
-          <Home />
+          <ProductList />
         </MainLayout>
       )
     },
@@ -65,14 +65,6 @@ export default function useRouteElements() {
           )
         }
       ]
-    },
-    {
-      path: path.product,
-      element: (
-        <MainLayout>
-          <ProductList />
-        </MainLayout>
-      )
     }
   ])
   return routeElement
