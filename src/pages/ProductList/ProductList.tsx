@@ -30,7 +30,6 @@ export default function ProductList() {
     queryFn: () => productAPI.getProduct(queryConfig),
     keepPreviousData: true
   })
-  console.log(listProduct)
 
   return (
     <section className='min-h-screen bg-secondary py-6'>
@@ -39,7 +38,9 @@ export default function ProductList() {
           <AsideFilter />
         </div>
         <div className='col-span-10 mt-4'>
-          <SortProductList />
+          {listProduct && (
+            <SortProductList queryConfig={queryConfig} pageSize={listProduct.data.data.pagination.page_size} />
+          )}
           {listProduct && (
             <>
               <div className='mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
