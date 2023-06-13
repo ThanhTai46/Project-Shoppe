@@ -30,7 +30,6 @@ export default function ProductList() {
     queryFn: () => productAPI.getProduct(queryConfig),
     keepPreviousData: true
   })
-  console.log(listProduct)
 
   return (
     <section className='min-h-screen bg-secondary py-6'>
