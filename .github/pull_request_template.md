@@ -1,7 +1,7 @@
 ### I. General
 
 - Link: <Link backlog \>
-- Mô tả:
+- Mô tả:1
   + Mô tả ngắn gọn về PR
   + Nếu là fix bug thì nêu nguyên nhân bug, và cách fix (để cho người no-code có thể đọc và hiểu được)
 
