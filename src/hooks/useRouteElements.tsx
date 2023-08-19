@@ -1,7 +1,6 @@
 import { AppContext } from '@/contexts/app.context'
 import MainLayout from '@/layouts/MainLayout'
 import RegisterLayout from '@/layouts/RegisterLayout'
-import Home from '@/pages/Home'
 import Login from '@/pages/Login'
 import ProductList from '@/pages/ProductList'
 import Profile from '@/pages/Profile'
@@ -9,6 +8,7 @@ import Register from '@/pages/Register'
 import path from '@/constants/path'
 import { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import ProductDetail from '@/pages/ProductDetail'
 export default function useRouteElements() {
   const { isAuthenticated } = useContext(AppContext)
 
@@ -49,6 +49,14 @@ export default function useRouteElements() {
       element: (
         <MainLayout>
           <ProductList />
+        </MainLayout>
+      )
+    },
+    {
+      path: path.productDetail,
+      element: (
+        <MainLayout>
+          <ProductDetail />
         </MainLayout>
       )
     },

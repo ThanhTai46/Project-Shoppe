@@ -1,8 +1,14 @@
 interface Props {
   rating: number
+  activeClassname?: string
+  nonActiveClassname?: string
 }
 
-export default function RatingProduct({ rating }: Props) {
+export default function RatingProduct({
+  rating,
+  activeClassname = 'h-3 w-3 fill-yellow-300 text-yellow-300',
+  nonActiveClassname = 'h-3 w-3 fill-current text-gray-300'
+}: Props) {
   const handleWidthRating = (order: number) => {
     if (order <= rating) {
       return '100%'
@@ -23,13 +29,7 @@ export default function RatingProduct({ rating }: Props) {
                 className='absolute left-0 top-0 h-full overflow-hidden'
                 style={{ width: handleWidthRating(index + 1) }}
               >
-                <svg
-                  enableBackground='new 0 0 15 15'
-                  viewBox='0 0 15 15'
-                  x='0'
-                  y='0'
-                  className='h-3 w-3 fill-yellow-300 text-yellow-300'
-                >
+                <svg enableBackground='new 0 0 15 15' viewBox='0 0 15 15' x='0' y='0' className={activeClassname}>
                   <polygon
                     points='7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4'
                     strokeLinecap='round'
@@ -38,13 +38,7 @@ export default function RatingProduct({ rating }: Props) {
                   ></polygon>
                 </svg>
               </div>
-              <svg
-                enableBackground='new 0 0 15 15'
-                viewBox='0 0 15 15'
-                x='0'
-                y='0'
-                className='h-3 w-3 fill-[#d5d5d5] text-[#d5d5d5]'
-              >
+              <svg enableBackground='new 0 0 15 15' viewBox='0 0 15 15' x='0' y='0' className={nonActiveClassname}>
                 <polygon
                   points='7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4'
                   strokeLinecap='round'

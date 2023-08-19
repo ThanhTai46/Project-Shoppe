@@ -49,7 +49,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
   const handleRemoveFilter = () => {
     navigate({
       pathname: path.home,
-      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category'])).toString()
+      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category']) as any).toString()
     })
   }
   return (

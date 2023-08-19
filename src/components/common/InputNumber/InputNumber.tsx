@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, forwardRef } from 'react'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface PropsInputNumber extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   className?: string
   errorClassName?: string
@@ -9,7 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 const inputDefaultClassName = 'text-gray w-full rounded-sm p-1 text-sm outline-none'
 
-const InputNumber = forwardRef<HTMLInputElement, Props>(function InputNumberInner(
+const InputNumber = forwardRef<HTMLInputElement, PropsInputNumber>(function InputNumberInner(
   { className, errorMessage, errorClassName = 'mt-1 text-red-600 min-h-[1.25rem] text-sm', onChange, ...rest },
   ref
 ) {
@@ -22,7 +22,7 @@ const InputNumber = forwardRef<HTMLInputElement, Props>(function InputNumberInne
   return (
     <>
       <div className={className}>
-        <input className={inputDefaultClassName} onChange={handleChange} {...rest} ref={ref} />
+        <input className={inputDefaultClassName && className} onChange={handleChange} {...rest} ref={ref} />
         <div className={errorClassName}>{errorMessage}</div>
       </div>
     </>

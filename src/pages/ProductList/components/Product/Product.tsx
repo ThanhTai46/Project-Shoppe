@@ -1,6 +1,6 @@
 import RatingProduct from '@/components/RatingProduct'
 import { Product as ProductType } from '@/types/product.type'
-import { formatPrice, formatSold } from '@/utils/utils'
+import { formatPrice, formatSold, generateNameId } from '@/utils/utils'
 import { Link } from 'react-router-dom'
 
 interface ProductProps {
@@ -9,7 +9,7 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   return (
-    <Link to={'/'}>
+    <Link to={`${generateNameId({ name: product.name, id: product._id })}`}>
       <div className='rounded-md bg-white shadow transition-transform duration-100 hover:translate-y-[-0.03rem] hover:shadow-md'>
         {/* Image */}
         <div className='relative w-full pt-[100%]'>

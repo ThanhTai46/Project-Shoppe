@@ -1,9 +1,33 @@
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom';
 import NavHeader from '../NavHeader';
 import Button from '../common/button/Button';
 import Popover from '../Popover';
+import useQueryConfig from '@/hooks/useQueryConfig';
+import { ParamsProduct } from '@/types/product.type';
+import { useForm } from 'react-hook-form';
+import path from '@/constants/path';
+import { omit } from 'lodash';
+
+type FormData = Pick<ParamsProduct, 'name'>
 
 export default function MainHeader() {
+  const { handleSubmit, register } = useForm<FormData | any>()
+  const navigate = useNavigate()
+  const queryConfig = useQueryConfig();
+
+  const submitData = handleSubmit((data) => {
+    const config = queryConfig.order ? omit({
+      ...queryConfig,
+      name: data?.name
+    }, ['order', 'sort_by']) : {
+      ...queryConfig,
+      name: data.name
+    }
+    navigate(
+      {
+        pathname: path.home, search: createSearchParams(config as any).toString()
+      })
+  })
   const cartHtml = (
     <div className='relative mx-auto max-w-[500px] rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
       <div className='p-2'>
@@ -62,9 +86,10 @@ export default function MainHeader() {
             </svg>
           </Link>
           {/* Input Search */}
-          <form className='col-span-9'>
+          <form className='col-span-9' onSubmit={(submitData)}>
             <div className='flex rounded-sm bg-white p-1'>
               <input
+                {...register("name")}
                 type='text'
                 placeholder='Search...'
                 className='flex-grow border-none bg-transparent px-3 py-1

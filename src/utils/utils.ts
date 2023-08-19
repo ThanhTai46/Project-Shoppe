@@ -21,3 +21,22 @@ export const formatSold = (sold: number) => {
   })
   return formatter.format(sold).replace('.', ',').toLowerCase()
 }
+
+
+export const percentDiscount = (original: number, sale: number) => {
+  return Math.round((((original - sale) / original) * 100)) + "%"
+}
+
+const removeSpecialCharacter = (str: string) => {
+  return str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, "")
+}
+
+
+export const generateNameId = ({ name, id }: { name: string, id: string }) => {
+  return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i,${id}`
+}
+
+export const generateIdFromNameId = (nameId: string) => {
+  const arr = nameId.split("-i,");
+  return arr[arr.length - 1];
+}
