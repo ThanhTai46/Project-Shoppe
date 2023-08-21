@@ -1,73 +1,91 @@
-import { Link, createSearchParams, useNavigate } from 'react-router-dom';
-import NavHeader from '../NavHeader';
-import Button from '../common/button/Button';
-import Popover from '../Popover';
-import useQueryConfig from '@/hooks/useQueryConfig';
-import { ParamsProduct } from '@/types/product.type';
-import { useForm } from 'react-hook-form';
-import path from '@/constants/path';
-import { omit } from 'lodash';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
+import NavHeader from '../NavHeader'
+import Button from '../common/button/Button'
+import Popover from '../Popover'
+import useQueryConfig from '@/hooks/useQueryConfig'
+import { ParamsProduct } from '@/types/product.type'
+import { useForm } from 'react-hook-form'
+import path from '@/constants/path'
+import { omit } from 'lodash'
+import { useQuery } from '@tanstack/react-query'
+import { purchaseStatus } from '@/constants/purchase'
+import purchaseApi from '@/api/purchase'
+import { formatPrice } from '@/utils/utils'
 
 type FormData = Pick<ParamsProduct, 'name'>
 
 export default function MainHeader() {
   const { handleSubmit, register } = useForm<FormData | any>()
   const navigate = useNavigate()
-  const queryConfig = useQueryConfig();
-
+  const queryConfig = useQueryConfig()
+  const MAX_PURCHASE = 5
   const submitData = handleSubmit((data) => {
-    const config = queryConfig.order ? omit({
-      ...queryConfig,
-      name: data?.name
-    }, ['order', 'sort_by']) : {
-      ...queryConfig,
-      name: data.name
-    }
-    navigate(
-      {
-        pathname: path.home, search: createSearchParams(config as any).toString()
-      })
+    const config = queryConfig.order
+      ? omit(
+          {
+            ...queryConfig,
+            name: data?.name
+          },
+          ['order', 'sort_by']
+        )
+      : {
+          ...queryConfig,
+          name: data.name
+        }
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(config as any).toString()
+    })
   })
+  const { data } = useQuery({
+    queryKey: ['purchases', { status: purchaseStatus.inCart }],
+    queryFn: () => purchaseApi.getPurchases({ status: purchaseStatus.inCart })
+  })
+  const productInCart = data?.data.data
+
   const cartHtml = (
     <div className='relative mx-auto max-w-[500px] rounded-sm border border-gray-200 bg-white text-sm shadow-md'>
-      <div className='p-2'>
-        <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
-        <div className='mt-5'>
-          <div className='mt-2 flex items-center justify-between py-2 hover:bg-gray-100'>
-            <div className='flex-shrink-0'>
-              <img
-                src={`https://down-vn.img.susercontent.com/file/sg-11134201-22110-p9lcfw5ngbkv57_tn`}
-                alt=''
-                className='h-11 w-11 object-cover'
-              />
-            </div>
-            <div className='ml-2 flex-grow overflow-hidden'>
-              <div className='truncate'>Mainboard MSI Pro H610M B DDR4 - H610M</div>
-            </div>
-            <div className='ml-2 flex-shrink-0 text-primary'>
-              <span className='text-primary'>₫1.890.000</span>
-            </div>
+      {productInCart ? (
+        <div className='p-2'>
+          <div className='capitalize text-gray-400'>Sản phẩm mới thêm</div>
+          {productInCart &&
+            productInCart.slice(0, MAX_PURCHASE)?.map((purchase) => (
+              <div className='mt-5' key={purchase._id}>
+                <div className='mt-2 flex items-center justify-between py-2 hover:bg-gray-100'>
+                  <div className='flex-shrink-0'>
+                    <img src={purchase.product.image} alt={purchase.product.name} className='h-11 w-11 object-cover' />
+                  </div>
+                  <div className='ml-2 flex-grow overflow-hidden'>
+                    <div className='truncate'>{purchase.product.name}</div>
+                  </div>
+                  <div className='ml-2 flex-shrink-0 text-primary'>
+                    <span className='text-primary'>₫{formatPrice(purchase.product.price)}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          <div className='mt-6 flex items-center justify-between'>
+            <div className='text-xs capitalize text-gray-500'>{`${
+              productInCart.length > MAX_PURCHASE ? productInCart.length - MAX_PURCHASE : ''
+            } Thêm hàng vào giỏ`}</div>
+            <Link to={''} className='rounded-sm bg-primary px-4 py-2 capitalize text-white hover:bg-opacity-90'>
+              Xem giỏ hàng
+            </Link>
           </div>
         </div>
-        <div className='mt-6 flex items-center justify-between'>
-          <div className='text-xs capitalize text-gray-500'>Thêm hàng vào giỏ</div>
-          <Link to={''} className='rounded-sm bg-primary px-4 py-2 capitalize text-white hover:bg-opacity-90'>
-            Xem giỏ hàng
-          </Link>
+      ) : (
+        <div className='flex h-[300px] !w-[350px] flex-col items-center justify-center p-2'>
+          <img
+            src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
+            alt='no purchase'
+            className='h-24 w-24'
+          />
+          <div className='mt-3 capitalize'>Chưa có sản phẩm</div>
         </div>
-      </div>
-
-      {/* No Product */}
-      {/* <div className='flex h-[300px] flex-col items-center justify-center p-2'>
-        <img
-          src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/9bdd8040b334d31946f49e36beaf32db.png'
-          alt='no purchase'
-          className='h-24 w-24'
-        />
-        <div className='mt-3 capitalize'>Chưa có sản phẩm</div>
-      </div> */}
+      )}
     </div>
-  );
+  )
 
   return (
     <header className='bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white'>
@@ -86,10 +104,10 @@ export default function MainHeader() {
             </svg>
           </Link>
           {/* Input Search */}
-          <form className='col-span-9' onSubmit={(submitData)}>
+          <form className='col-span-9' onSubmit={submitData}>
             <div className='flex rounded-sm bg-white p-1'>
               <input
-                {...register("name")}
+                {...register('name')}
                 type='text'
                 placeholder='Search...'
                 className='flex-grow border-none bg-transparent px-3 py-1
@@ -135,7 +153,7 @@ export default function MainHeader() {
                 </svg>
                 {
                   <span className='absolute left-[17px] top-[-5px] rounded-full bg-white px-[9px] py-[1px] text-xs text-primary '>
-                    2
+                    {productInCart?.length}
                   </span>
                 }
               </Link>
@@ -144,5 +162,5 @@ export default function MainHeader() {
         </div>
       </div>
     </header>
-  );
+  )
 }

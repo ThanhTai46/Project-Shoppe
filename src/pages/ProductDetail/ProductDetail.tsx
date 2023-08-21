@@ -1,5 +1,5 @@
 import productAPI from '@/api/product'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import RatingProduct from '@/components/RatingProduct'
 import { formatPrice, formatSold, generateIdFromNameId, percentDiscount } from '@/utils/utils'
@@ -8,6 +8,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ParamsProduct, Product as TypeProduct, Product as ProductType } from '@/types/product.type'
 import Product from '../ProductList/components/Product'
 import QuantityController from '@/components/common/QuantityController'
+import purchaseApi from '@/api/purchase'
+import { queryClient } from '@/main'
+import { purchaseStatus } from '@/constants/purchase'
+import { toast } from 'react-toastify'
 
 export default function ProductDetail() {
   const [buyCount, setBuyCount] = useState<number>(1)
@@ -17,6 +21,9 @@ export default function ProductDetail() {
     queryFn: () => productAPI.detailProduct(generateIdFromNameId(nameId as string))
   })
 
+  const addToCartMutation = useMutation({
+    mutationFn: purchaseApi.addToCart
+  })
   const categoryId = dataProduct?.data.data.category._id
 
   // Get Product Related
@@ -86,6 +93,18 @@ export default function ProductDetail() {
 
   const handleBuyCount = (value: number) => {
     setBuyCount(value)
+  }
+
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { product_id: product._id, buy_count: buyCount },
+      {
+        onSuccess: () => {
+          toast.success('Thêm thành công vào giỏ hàng')
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchaseStatus.inCart }] })
+        }
+      }
+    )
   }
 
   useEffect(() => {
@@ -196,7 +215,10 @@ export default function ProductDetail() {
                 <div className='ml-6 text-sm text-gray-500'>{product.quantity} sản phẩm có sẵn</div>
               </div>
               <div className='mt-8 flex items-center'>
-                <button className='flex h-12 items-center justify-center rounded-sm border border-orange-500 bg-[#FFF5F1] px-5 capitalize text-orange-500 shadow-sm hover:bg-[#ffc5b22e]'>
+                <button
+                  onClick={addToCart}
+                  className='flex h-12 items-center justify-center rounded-sm border border-orange-500 bg-[#FFF5F1] px-5 capitalize text-orange-500 shadow-sm hover:bg-[#ffc5b22e]'
+                >
                   <svg
                     enableBackground='new 0 0 15 15'
                     viewBox='0 0 15 15'
