@@ -3,12 +3,15 @@ import MainLayout from '@/layouts/MainLayout'
 import RegisterLayout from '@/layouts/RegisterLayout'
 import Login from '@/pages/Login'
 import ProductList from '@/pages/ProductList'
-import Profile from '@/pages/Profile'
 import Register from '@/pages/Register'
 import path from '@/constants/path'
-import { useContext } from 'react'
+import { Suspense, useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import ProductDetail from '@/pages/ProductDetail'
+import UserLayout from '@/pages/User/layouts/UserLayout'
+import ChangePassword from '@/pages/User/pages/ChangePassword/ChangePassword'
+import HistoryPurchase from '@/pages/User/pages/HistoryPurchase/HistoryPurchase'
+import Profile from '@/pages/User/pages/Profile/Profile'
 export default function useRouteElements() {
   const { isAuthenticated } = useContext(AppContext)
 
@@ -61,15 +64,35 @@ export default function useRouteElements() {
       )
     },
     {
-      path: '',
-      element: <ProtectedRoutes />,
+      path: path.user,
+      element: (
+        <MainLayout>
+          <UserLayout />
+        </MainLayout>
+      ),
       children: [
         {
           path: path.profile,
           element: (
-            <MainLayout>
+            <Suspense>
               <Profile />
-            </MainLayout>
+            </Suspense>
+          )
+        },
+        {
+          path: path.changePassword,
+          element: (
+            <Suspense>
+              <ChangePassword />
+            </Suspense>
+          )
+        },
+        {
+          path: path.historyPurchase,
+          element: (
+            <Suspense>
+              <HistoryPurchase />
+            </Suspense>
           )
         }
       ]

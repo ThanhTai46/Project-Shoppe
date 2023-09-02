@@ -9,6 +9,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import RatingStars from '../RatingStars/RatingStars'
 import { omit } from 'lodash'
+import InputV2 from '@/components/common/InputV2'
 
 interface Props {
   queryConfig: ParamsProduct
@@ -49,7 +50,9 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
   const handleRemoveFilter = () => {
     navigate({
       pathname: path.home,
-      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category']) as any).toString()
+      search: createSearchParams(
+        omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category']) as any
+      ).toString()
     })
   }
   return (
@@ -128,7 +131,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
             <div className='my-5'>Khoảng giá</div>
             <div className='flex flex-col gap-4'>
               <div className='flex items-center justify-between'>
-                <Controller
+                {/* <Controller
                   control={control}
                   name='min_price'
                   render={({ field }) => {
@@ -146,29 +149,30 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                       />
                     )
                   }}
+                /> */}
+                <InputV2
+                  name='min_price'
+                  onChange={() => {
+                    trigger('max_price')
+                  }}
+                  classNameError='hidden'
+                  placeholder='₫ TỪ'
+                  className='w-full rounded-sm border border-gray-300 outline-none focus:border-gray-500 focus:shadow-sm'
+                  control={control}
                 />
 
                 <div className='mx-3 h-[1px] flex-1 bg-[#bdbdbd]'>
                   <span className='invisible'>-</span>
                 </div>
-                <Controller
-                  control={control}
+                <InputV2
                   name='max_price'
-                  render={({ field }) => {
-                    return (
-                      <InputNumber
-                        {...field}
-                        onChange={(event: any) => {
-                          field.onChange(event)
-                          trigger('min_price')
-                        }}
-                        placeholder='₫ ĐẾN'
-                        errorClassName='hidden'
-                        name='max_price'
-                        className='w-full rounded-sm border border-gray-300 outline-none focus:border-gray-500 focus:shadow-sm'
-                      />
-                    )
+                  onChange={() => {
+                    trigger('min_price')
                   }}
+                  classNameError='hidden'
+                  placeholder='₫ ĐẾN'
+                  className='w-full rounded-sm border border-gray-300 outline-none focus:border-gray-500 focus:shadow-sm'
+                  control={control}
                 />
               </div>
               <div className='mt-1 min-h-[1.25rem] text-center text-sm text-red-600'>{errors.min_price?.message}</div>

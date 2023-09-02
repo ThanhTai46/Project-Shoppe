@@ -22,6 +22,7 @@ export default function Login() {
 
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors }
@@ -55,11 +56,11 @@ export default function Login() {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <span className='text-gray block text-[20px] font-normal'>Đăng nhập</span>
                 <div className='mt-8'>
-                  <Input type='email' name='email' control={control} placeholder='Email/Tên đăng nhập' />
+                  <Input type='email' name='email' register={register} placeholder='Email/Tên đăng nhập' />
                   <Error message={errors.email?.message} />
                 </div>
                 <div className='my-4'>
-                  <Input type='password' name='password' control={control} placeholder='Mật khẩu' />
+                  <Input type='password' name='password' register={register} placeholder='Mật khẩu' />
                   <Error message={errors.password?.message} />
                 </div>
                 <Button isLoading={isLoading} className='w-full py-3'>

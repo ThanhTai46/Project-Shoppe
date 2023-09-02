@@ -40,3 +40,25 @@ export const generateIdFromNameId = (nameId: string) => {
   const arr = nameId.split("-i,");
   return arr[arr.length - 1];
 }
+
+export const hideEmail = (email: string) => {
+  if (!isValidEmail(email)) {
+    return "Invalid email";
+  }
+
+  // Tách phần username và domain
+  const [username, domain] = email.split('@');
+
+  // Chuyển đổi username thành địa chỉ ẩn
+  const hiddenUsername = username.substring(0, 2) + '*'.repeat(username.length - 2);
+
+  // Kết hợp username và domain để tạo địa chỉ email ẩn
+  const hiddenEmail = `${hiddenUsername}@${domain}`;
+
+  return hiddenEmail;
+}
+
+function isValidEmail(email: string) {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(email);
+}

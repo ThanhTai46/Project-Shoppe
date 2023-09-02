@@ -21,7 +21,7 @@ type FormData = yup.InferType<typeof registerSchema>
 export default function Register() {
   const {
     handleSubmit,
-    control,
+    register,
     setError,
     formState: { errors }
   } = useForm<FormData>({
@@ -67,16 +67,16 @@ export default function Register() {
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <span className='text-gray block text-[20px] font-normal'>Đăng ký</span>
                 <div className='mt-8'>
-                  <Input name='email' control={control} placeholder='Email/Tên đăng nhập' />
+                  <Input name='email' register={register} placeholder='Email/Tên đăng nhập' />
                   <Error message={errors.email?.message} />
                 </div>
                 <div className='mt-2'>
-                  <Input type='password' name='password' placeholder='Mật khẩu' control={control} />
+                  <Input type='password' name='password' placeholder='Mật khẩu' register={register} />
                   <Error message={errors.password?.message} />
                 </div>
                 <div className='mt-2'>
                   <Input
-                    control={control}
+                    register={register}
                     type='password'
                     name='passwordConfirmation'
                     placeholder='Nhập lại mật khẩu'
