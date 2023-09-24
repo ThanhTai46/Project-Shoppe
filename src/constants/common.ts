@@ -1,0 +1,1 @@
+export const UPLOAD_TYPE = ".jpg,.jpeg,.png"

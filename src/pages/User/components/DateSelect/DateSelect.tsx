@@ -17,7 +17,6 @@ export default function DateSelect({ errorMessage, value, onChange }: Props) {
     month: value?.getMonth() || 0,
     year: value?.getFullYear() || 1990
   })
-  console.log('🚀 ~ file: DateSelect.tsx:20 ~ DateSelect ~ date:', date)
 
   useEffect(() => {
     if (value) {
