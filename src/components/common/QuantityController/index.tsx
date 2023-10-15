@@ -1,6 +1,6 @@
-import InputNumber, { PropsInputNumber } from '../InputNumber'
+import InputNumber, { InputNumberProps } from '../InputNumber'
 
-interface Props extends PropsInputNumber {
+interface Props extends InputNumberProps {
   max?: number
   onIncrease?: (value: number) => void
   onDecrease?: (value: number) => void
@@ -60,10 +60,11 @@ export default function QuantityController({
         </svg>
       </button>
       <InputNumber
+        {...rest}
         value={value}
         className='flex h-8 w-14 items-center justify-center border-b border-t border-gray-300 !text-center outline-none'
         onChange={handleChange}
-        errorClassName='hidden'
+        classNameError='hidden'
       />
       <button
         className='flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600'

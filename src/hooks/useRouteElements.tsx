@@ -1,17 +1,23 @@
 import { AppContext } from '@/contexts/app.context'
 import MainLayout from '@/layouts/MainLayout'
 import RegisterLayout from '@/layouts/RegisterLayout'
-import Login from '@/pages/Login'
+// import Login from '@/pages/Login'
 import ProductList from '@/pages/ProductList'
-import Register from '@/pages/Register'
+// import Register from '@/pages/Register'
 import path from '@/constants/path'
-import { Suspense, useContext } from 'react'
+import { Suspense, lazy, useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import ProductDetail from '@/pages/ProductDetail'
 import UserLayout from '@/pages/User/layouts/UserLayout'
 import ChangePassword from '@/pages/User/pages/ChangePassword/ChangePassword'
 import HistoryPurchase from '@/pages/User/pages/HistoryPurchase/HistoryPurchase'
 import Profile from '@/pages/User/pages/Profile/Profile'
+import NotFoundPage from '@/pages/404'
+
+// Import Component
+const Login = lazy(() => import("@/pages/Login"))
+const Register = lazy(() => import("@/pages/Register"))
+
 export default function useRouteElements() {
   const { isAuthenticated } = useContext(AppContext)
 
@@ -32,7 +38,9 @@ export default function useRouteElements() {
           path: path.login,
           element: (
             <RegisterLayout>
-              <Login />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Login />
+              </Suspense>
             </RegisterLayout>
           )
         },
@@ -40,7 +48,9 @@ export default function useRouteElements() {
           path: path.register,
           element: (
             <RegisterLayout>
-              <Register />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Register />
+              </Suspense>
             </RegisterLayout>
           )
         }
@@ -64,38 +74,50 @@ export default function useRouteElements() {
       )
     },
     {
-      path: path.user,
-      element: (
-        <MainLayout>
-          <UserLayout />
-        </MainLayout>
-      ),
+      path: '',
+      element: <ProtectedRoutes />,
       children: [
         {
-          path: path.profile,
+          path: path.user,
           element: (
-            <Suspense>
-              <Profile />
-            </Suspense>
-          )
+            <MainLayout>
+              <UserLayout />
+            </MainLayout>
+          ),
+          children: [
+            {
+              path: path.profile,
+              element: (
+                <Suspense>
+                  <Profile />
+                </Suspense>
+              )
+            },
+            {
+              path: path.changePassword,
+              element: (
+                <Suspense>
+                  <ChangePassword />
+                </Suspense>
+              )
+            },
+            {
+              path: path.historyPurchase,
+              element: (
+                <Suspense>
+                  <HistoryPurchase />
+                </Suspense>
+              )
+            },
+          ]
         },
-        {
-          path: path.changePassword,
-          element: (
-            <Suspense>
-              <ChangePassword />
-            </Suspense>
-          )
-        },
-        {
-          path: path.historyPurchase,
-          element: (
-            <Suspense>
-              <HistoryPurchase />
-            </Suspense>
-          )
-        }
       ]
+    },
+    {
+      path: "*",
+      element: (
+        < NotFoundPage />
+      )
     }
   ])
   return routeElement

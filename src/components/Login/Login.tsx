@@ -23,7 +23,6 @@ export default function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({

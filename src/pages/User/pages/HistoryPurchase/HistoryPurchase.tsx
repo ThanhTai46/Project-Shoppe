@@ -1,8 +1,5 @@
-import path from '@/constants/path'
 import { purchaseStatus } from '@/constants/purchase'
 import useQueryParams from '@/hooks/useQueryParams'
-import classNames from 'classnames'
-import { Link, createSearchParams } from 'react-router-dom'
 import TabLink from './TabLink'
 import { useQuery } from '@tanstack/react-query'
 import purchaseApi from '@/api/purchase'
