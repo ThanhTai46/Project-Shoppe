@@ -13,6 +13,8 @@ import ChangePassword from '@/pages/User/pages/ChangePassword/ChangePassword'
 import HistoryPurchase from '@/pages/User/pages/HistoryPurchase/HistoryPurchase'
 import Profile from '@/pages/User/pages/Profile/Profile'
 import NotFoundPage from '@/pages/404'
+import Test from '@/pages/todo'
+import Video from '@/components/Video'
 
 // Import Component
 const Login = lazy(() => import("@/pages/Login"))
@@ -63,6 +65,20 @@ export default function useRouteElements() {
         <MainLayout>
           <ProductList />
         </MainLayout>
+      )
+    },
+    {
+      path: "todos",
+      index: true,
+      element: (
+        <Test />
+      )
+    },
+    {
+      path: "/video",
+      index: true,
+      element: (
+        <Video />
       )
     },
     {
